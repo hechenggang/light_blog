@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="cmn-Hans-CN">
+<!-- 
+主题：base 
+作用于：用户管理页 
+-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>轻博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/picture/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/base/base.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-snotify@latest/styles/material.css">
+
+    <script>
+        var CONFIG = {{ config | safe }};
+    </script>
+</head>
+
+{% raw %}
+
+<body>
+    <!-- Vue 实例容器 -->
+    <div id="app">
+        <router-view></router-view>
+        <vue-snotify></vue-snotify>
+    </div>
+    <!-- 加载编辑器 -->
+    <script src="https://cdn.jsdelivr.net/npm/wangeditor"></script>
+    <!-- 加载 Vue 和 Vue-router 和 vue-snotify-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-snotify@latest/vue-snotify.min.js"></script>
+    <!-- Vue 组件模板 -->
+    <template id="template-nav">
+        <div class="nav">
+            <ul class="nav-items">
+                <li v-for="n in nav_data" v-bind:class="{ 'nav-item':!n.active ,'nav-item-active':n.active}">
+                    <router-link v-bind:to="n.target">
+                        {{ n.name }}
+                    </router-link>
+                </li>
+            </ul>
+            <div class="nav-icon">
+                <img src="">
+            </div>
+        </div>
+    </template>
+    <template id="template-setting">
+        <div>
+            <index-nav v-bind:active_index="0"></index-nav>
+            <div id="index">
+                <div class="full">
+                    <div class="relative-area">
+                        <span v-if="!user_detail" class="wating">Loading......</span>
+                        <div v-if="user_detail">
+                            <table v-if="!is_changging" class="b-w">
+                                <tr>
+                                    <td>博客名</td>
+                                    <td>{{ user_detail.config.blog_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>当前主题</td>
+                                    <td>{{ user_detail.config.theme }}</td>
+                                </tr>
+                                <tr>
+                                    <td>文章总数</td>
+                                    <td>{{ user_detail.total }}</td>
+                                </tr>
+                                <tr>
+                                    <td>访问总数</td>
+                                    <td>{{ user_detail.viewcount }}</td>
+                                </tr>
+                            </table>
+                            <table v-if="is_changging" class="b-w">
+                                <tr>
+                                    <td>博客名</td>
+                                    <td><input type="text" v-model="user_detail.config.blog_name"></td>
+                                </tr>
+                                <tr>
+                                    <td>当前主题</td>
+                                    <td>{{ user_detail.config.theme }}</td>
+                                </tr>
+                                <tr>
+                                    <td>文章总数</td>
+                                    <td>{{ user_detail.total }}</td>
+                                </tr>
+                                <tr>
+                                    <td>访问总数</td>
+                                    <td>{{ user_detail.viewcount }}</td>
+                                </tr>
+                            </table>
+                            <button v-on:click="is_changging = !is_changging">{{ !is_changging ? '修改':'放弃' }}</button>
+                            <button v-if="is_changging" v-on:click="submit_changging">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </template>
+
+    <template id="template-manage">
+        <div>
+            <index-nav v-bind:active_index="1"></index-nav>
+            <div id="main">
+
+                <div class="relative-area">
+                    <ul class="articles">
+                        <span v-if="!articles" class="wating">Loading......</span>
+                        <li v-if="articles" v-for="a in articles" class="article">
+                            
+                            <a class="a-title" v-bind:href="'/b/'+ blog_info['username'] +'#/article/'+a[0]">
+                                {{ a[1] }} 
+                            </a>
+                            <p class="a-brief">{{ a[2] }}</p>
+                            <p class="a-tags">
+                                <span v-on:click="to_delete" v-bind:article_id="a[0]" class="btn">
+                                    删除
+                                </span>
+                                <span class="a-tag">
+                                    <router-link v-bind:to="'/writing/'+a[0]" class="btn">
+                                        修改
+                                    </router-link>
+                                </span>
+                            </p>
+                   
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    
+        </div>
+    </template>
+
+    <template id="template-writing">
+        <div>
+            <index-nav v-bind:active_index="2"></index-nav>
+            <div id="main">
+                <div class="relative-area">
+                    
+                    <cus-editor v-bind:article_id="id"></cus-editor>
+                  
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-editor">
+        <div>
+            <div class="f w-100">
+                <div class="w-75"><input placeholder="主题" class="e-input" type="text" v-model="title"></div>
+                <div class="w-25"><input placeholder="作者" class="e-input " type="text" v-model="author"></div>
+            </div>
+            <input placeholder="摘要" class="e-input" type="text" v-model="brief">
+            <div id="editor-bar"></div>
+            <div id="editor"></div>
+            <button v-bind:disabled="(title.length < 1)?true:false" v-bind:title="(title.length < 1)?'请输入标题':'点我提交'" v-if="!is_update" v-on:click.once="save">提交</button>
+            <button v-if="is_update" v-on:click.once="update">确认修改</button>
+        </div>
+    </template>
+
+    <!-- 自定义脚本 -->
+    <script src="/static/javascript/base/admin.js"></script>
+
+</body>
+{% endraw %}
+
+</html>

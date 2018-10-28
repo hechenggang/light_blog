@@ -1,0 +1,234 @@
+/* 
+主题：base 
+作用于：用户主页,管理页
+ */
+/* 
+色彩:
+主 #33475F 墨蓝
+主 rgba(255, 255, 255, 0.500) 白
+ */
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: 1rem;
+    font-family: "Microsoft YaHei";
+    background-color: #33475F;
+    background-size: 100%;
+}
+p {
+    margin: 0;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #323232;
+}
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+li {
+    padding: 0;
+}
+img {
+    width: 100%;
+    border-radius: .2rem;
+    margin: .2rem 0;
+}
+input {
+    outline: none;
+    border: none;
+    padding: .5rem .3rem;
+    border-radius: 0;
+    color: #33475F;
+    background-color: #fffffd;
+
+}
+hr {
+    border: 1px solid #33475F;
+}
+
+button {
+    margin-top: .3rem;
+    outline: none;
+    border: none;
+    padding: .3rem .5rem;
+    color: #FFFFFD;
+    background-color: rgb(0, 150, 66);
+    cursor: pointer;
+    text-align: center;
+}
+form {
+    width: 35%;
+}
+td{
+    color:#33475F;
+    width: 50%;
+    font-size: 1rem;
+}
+tr {
+    margin: .3rem 0;
+}
+table {
+    padding: .5rem;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.500);
+}
+.warning {
+    color: rgb(234,0,50);
+}
+.info {
+    color: rgb(0,134,204);
+}
+.btn {
+    color: #33475F;
+    font-size: .9rem;
+    cursor: pointer;
+    padding: .2rem;
+    margin: 0 .2rem;
+}
+/* 大屏 */
+@media screen and (min-width: 1024px) {
+     
+}
+/* 小屏 */
+@media screen and (max-width: 1024px) {
+   
+}
+
+/* 导航栏样式 */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 50px;
+    background-color: rgba(255, 255, 255, 0.500);
+}
+.nav-items {
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;
+    min-height: 50px;
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    padding: 0 1rem;
+}
+.nav-item-active {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    padding: 0 1rem;
+    background-color: rgba(51, 71, 95, 0.500);
+}
+.nav-item a {
+    color: #33475F;
+    font-weight: bold;
+}
+.nav-item-active a {
+    color: #fffffd;
+}
+.nav-icon {
+    width: 30px;
+    padding-right: 2rem;
+}
+
+
+/* 内容区样式 */
+#main {
+    position: fixed;
+    overflow-y: auto;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.relative-area {
+    margin: .5rem auto;
+    width: 75%;
+    padding: .5rem;
+    
+}
+
+
+/* 文章列表 */
+.articles {
+    width: 100%;
+    
+}
+.article {
+    position: relative;
+    width: calc(100% - 2rem);
+    margin-bottom: .5rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.500);
+}
+.a-tags {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 25px;
+    padding: 0 .5rem;
+}
+.a-tag {
+    font-size: .9rem;
+    height: 25px;
+}
+.a-title {
+    font-size: 1.2rem;
+    
+}
+.a-brief {
+    margin-top: .2rem;
+    font-size: 1rem;
+    font-weight: lighter;
+}
+
+/* 阅读页 */
+.a-author {
+    font-size: 1rem;
+    color: #323232;
+    margin: .3rem 0;
+    font-weight: lighter;
+}
+.a-date {
+    font-size: 1rem;
+    color: #323232;
+    font-weight: lighter;
+    border-bottom: 1px solid #33475F;
+    padding-bottom: .3rem; 
+    margin-bottom: .3rem;
+}
+.a-content{
+    margin:.5rem 0; 
+}
+.a-count{
+    border-top: 1px solid #33475F;
+    font-weight: lighter;
+    padding-top: .5rem; 
+    text-align: right;
+}
+
+
+/* 编辑器 */
+.e-input {
+    color: #fffffd;
+    border: .5px solid #fffffd;
+    padding: .7rem .5rem;
+    width: calc(100% - 1rem);
+    background-color: transparent;
+    margin-bottom: .5rem;
+}
+.w-e-toolbar {
+    background-color: #33475F;
+    border: 1px solid #fffffd;
+}
+.w-e-text-container {
+    background-color: rgba(255, 255, 255, 0.500);
+    border: 1px solid #fffffd;
+    border-top: none;
+}

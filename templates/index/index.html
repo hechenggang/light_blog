@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="cmn-Hans-CN">
+<!-- 
+主页
+ -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>轻博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/picture/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-snotify@latest/styles/material.css">
+</head>
+{% raw %}
+<body>
+    <!-- Vue 实例容器 -->
+    <div id="app">
+        <router-view></router-view>
+        <vue-snotify></vue-snotify>
+    </div>
+    <!-- 加载 Vue 和 Vue-router 和 vue-snotify-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-snotify@latest/vue-snotify.min.js"></script>
+    <!-- Vue 组件模板 -->
+    <template id="template-index-nav">
+        <div class="nav">
+            <ul class="nav-items">
+                <li v-for="n in nav_data" v-bind:class="{ 'nav-item':!n.active ,'nav-item-active':n.active}">
+                    <router-link v-bind:to="n.target">
+                        {{ n.name }}
+                    </router-link>
+                </li>
+            </ul>
+            <div class="nav-icon">
+                <img src="/static/picture/default_user_icon.png">
+            </div>
+        </div>
+    </template>
+    <template id="template-index">
+        <div>
+            <index-nav v-bind:active_index="0"></index-nav>
+            <div id="main">
+                <div class="center-area">
+                    <p class="b-title">也许是更加舒服的写作体验。</p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="template-login">
+        <div>
+            <index-nav v-bind:active_index="1"></index-nav>
+            <div id="main">
+                <div class="center-area">
+                    <form class="form">
+                        <input placeholder="用户名" class="input" v-model="username" type="text" name="username"
+                            id="login-username">
+                        <input placeholder="密码" class="input" v-model="password" type="password" name="password"
+                            id="login-password">
+                        <button v-bind:disabled="!input_check" v-bind:class="{ 'button mar-t-03 disable':!input_check, 'button mar-t-03':input_check}" @click.prevent="login">登录</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>   
+    <template id="template-join">
+        <div>
+            <index-nav v-bind:active_index="2"></index-nav>
+            <div id="main">
+                <div class="center-area">
+                    <form class="form">
+                        <input placeholder="用户名" class="input" v-model="username" type="text" name="username"
+                            id="login-username">
+                        <input placeholder="密码" class="input" v-model="password" type="password" name="password"
+                            id="login-password">
+                        <button v-bind:disabled="!input_check"  @click.prevent="join">注册</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>   
+    <!-- 自定义脚本 -->
+    <script src="/static/javascript/index.js"></script>
+</body>
+{% endraw %}
+</html>
